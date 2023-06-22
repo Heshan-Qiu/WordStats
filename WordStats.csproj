@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Booster.CodingTest.Library">
-      <HintPath>Booster.CodingTest.Library.dll</HintPath>
-    </Reference>
     <Reference Include="NLipsum.Core">
       <HintPath>NLipsum.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Booster.CodingTest.Library">
+      <HintPath>Booster.CodingTest.Library.dll</HintPath>
     </Reference>
   </ItemGroup>
 
