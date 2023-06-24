@@ -1,6 +1,6 @@
 using System.Text;
-using Booster.CodingTest.Library;
 
+using RandomWords;
 using WordStats;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "Word Stats App API", Description = "Word Stats App API", Version = "v1" });
 });
 
-builder.Services.AddSingleton<Stream, WordStream>();
+builder.Services.AddSingleton<Stream, RandomWordStream>();
 builder.Services.AddSingleton<Encoding, UTF8Encoding>();
 builder.Services.AddSingleton<IWordStats, WordStatsDictionaryImpl>();
 builder.Services.AddSingleton<IWordStatsWriter, WordStatsWriterConsoleImpl>();
