@@ -64,8 +64,7 @@ namespace WordStats
         {
             lock (_lock)
             {
-                return Words.OrderByDescending(w => w.Key.Length)
-                    .OrderByDescending(w => w.Key).Take(5).Select(w => w.Key);
+                return Words.OrderByDescending(w => w.Key.Length).Take(5).Select(w => w.Key);
             }
         }
 
@@ -73,7 +72,7 @@ namespace WordStats
         {
             lock (_lock)
             {
-                return Words.OrderBy(w => w.Key.Length).OrderBy(w => w.Key).Take(5).Select(w => w.Key);
+                return Words.OrderBy(w => w.Key.Length).Take(5).Select(w => w.Key);
             }
         }
 

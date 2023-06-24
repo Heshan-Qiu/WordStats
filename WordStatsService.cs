@@ -1,5 +1,5 @@
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
 
 namespace WordStats
@@ -34,60 +34,90 @@ namespace WordStats
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("WordStatsService is running at: {time}", DateTimeOffset.Now);
-
-                var buffer = ReadStream();
-                var text = ConvertStreamToString(buffer);
-
-                GetWordStats(text);
-                GetCharacterStats(text);
-
-                _writer.WriteStats(_stats);
-
-                await Task.Delay(_options.Delay, stoppingToken);
+                await DoReadAsyncTask();
+                await DoWriteAsyncTask();
             }
         }
 
-        private byte[]? ReadStream()
+        private async Task DoReadAsyncTask()
         {
-            if (_stream == null || _stream.CanRead == false)
-                return null;
+            var buffer = ReadStream();
+            var text = ConvertStreamToString(buffer);
 
-            var buffer = new byte[1024];
-            _stream.Read(buffer);
+            GetWordStats(text);
+            GetCharacterStats(text);
 
-            return buffer;
+            await Task.Delay(_options.ReadDelay);
         }
 
-        private string? ConvertStreamToString(byte[]? buffer)
+        private async Task DoWriteAsyncTask()
         {
-            if (buffer == null)
-                return null;
+            _writer.WriteStats(_stats);
+            await Task.Delay(_options.WriteDelay);
+        }
 
+        private byte[] ReadStream()
+        {
+            if (_stream == null || !_stream.CanRead)
+                return new byte[0];
+
+            var bufferSize = 1024;
+            var buffer = new byte[bufferSize];
+            int bytesRead = 0;
+            bool continueReading = true;
+            List<(byte[] buffer, int bytesRead)> buffers = new List<(byte[] buffer, int bytesRead)>();
+
+            while (continueReading && (bytesRead = _stream.Read(buffer)) > 0)
+            {
+                var tempBuffer = new byte[bytesRead];
+                Array.Copy(buffer, tempBuffer, bytesRead);
+                buffers.Add((tempBuffer, bytesRead));
+
+                // Check if the last character is not a space
+                if (buffer[bytesRead - 1] != ' ')
+                    continueReading = true;
+                else
+                    continueReading = false;
+            }
+
+            // Create a new byte array with the actual number of bytes read
+            int totalBytes = buffers.Sum(b => b.bytesRead);
+            byte[] result = new byte[totalBytes];
+            int offset = 0;
+
+            foreach (var b in buffers)
+            {
+                Array.Copy(b.buffer, 0, result, offset, b.bytesRead);
+                offset += b.bytesRead;
+            }
+
+            return result;
+        }
+
+        private string ConvertStreamToString(byte[] buffer)
+        {
             return _encoding.GetString(buffer);
         }
 
-        private void GetWordStats(string? text)
+        private void GetWordStats(string text)
         {
-            if (text == null)
+            if (string.IsNullOrEmpty(text))
                 return;
 
-            var words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(w => w.Trim())
+            // Define the regular expression pattern to match words
+            string pattern = @"\b\w+\b";
+
+            var words = Regex.Matches(text, pattern)
+                .Cast<Match>()
+                .Select(m => m.Value)
                 .GroupBy(w => w)
                 .ToDictionary(g => g.Key, g => g.Count());
-            _stats.AddWords(words);
 
-            var characters = text.Replace(" ", "").ToCharArray()
-                .GroupBy(c => c)
-                .ToDictionary(g => g.Key, g => g.Count());
-            _stats.AddCharacters(characters);
+            _stats.AddWords(words);
         }
 
-        private void GetCharacterStats(string? text)
+        private void GetCharacterStats(string text)
         {
-            if (text == null)
-                return;
-
             var characters = text.Replace(" ", "").ToCharArray()
                 .GroupBy(c => c)
                 .ToDictionary(g => g.Key, g => g.Count());

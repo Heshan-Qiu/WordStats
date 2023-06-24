@@ -7,6 +7,7 @@ namespace WordStats
 {
     public class WordStatsServiceOptions
     {
-        public int Delay { get; set; } = 1000;
+        public int ReadDelay { get; set; } = 1000;
+        public int WriteDelay { get; set; } = 1000;
     }
 }

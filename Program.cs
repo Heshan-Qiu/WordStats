@@ -18,10 +18,22 @@ builder.Services.AddSingleton<IWordStatsWriter, WordStatsWriterConsoleImpl>();
 builder.Services.Configure<WordStatsServiceOptions>(builder.Configuration.GetSection("WordStatsService"));
 builder.Services.AddHostedService<WordStatsService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Word Stats App API v1"));
+
+app.UseCors("AllowAll");
 
 app.MapGet("/", () => "Hello WordStats App!");
 app.MapGet("/stats", () => app.Services.GetService<IWordStats>()?.ToJsonString());
