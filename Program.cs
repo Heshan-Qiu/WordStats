@@ -1,6 +1,6 @@
 using System.Text;
 using Booster.CodingTest.Library;
-using Microsoft.OpenApi.Models;
+
 using WordStats;
 
 var builder = WebApplication.CreateBuilder(args);

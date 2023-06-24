@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WordStats
 {
     public interface IWordStats
@@ -20,6 +15,8 @@ namespace WordStats
         IEnumerable<String> GetSmallestFiveWords();
 
         IEnumerable<KeyValuePair<string, int>> GetMostFrequentTenWords();
+
+        IEnumerable<KeyValuePair<string, int>> GetWords();
 
         IEnumerable<KeyValuePair<char, int>> GetCharacters();
 

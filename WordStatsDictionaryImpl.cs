@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace WordStats
 {
@@ -81,6 +76,14 @@ namespace WordStats
             lock (_lock)
             {
                 return Words.OrderByDescending(w => w.Value).Take(10);
+            }
+        }
+
+        public IEnumerable<KeyValuePair<string, int>> GetWords()
+        {
+            lock (_lock)
+            {
+                return Words.OrderByDescending(w => w.Value);
             }
         }
 

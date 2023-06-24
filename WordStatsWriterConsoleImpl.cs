@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WordStats
 {
     public class WordStatsWriterConsoleImpl : IWordStatsWriter
     {
         public void WriteStats(IWordStats stats)
         {
+            if (stats == null)
+                throw new ArgumentNullException(nameof(stats));
+
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
