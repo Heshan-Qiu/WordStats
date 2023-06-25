@@ -2,7 +2,7 @@ namespace WordStats
 {
     public class WordStatsWriterConsoleImpl : IWordStatsWriter
     {
-        public void WriteStats(IWordStats stats)
+        public void WriteStats(IWordStats? stats)
         {
             if (stats == null)
                 throw new ArgumentNullException(nameof(stats));

@@ -33,7 +33,6 @@ namespace WordStats
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("WordStatsService is running at: {time}", DateTimeOffset.Now);
                 await DoReadAsyncTask();
                 await DoWriteAsyncTask();
             }

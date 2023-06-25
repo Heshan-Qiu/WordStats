@@ -475,3 +475,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+Properties/ServiceDependencies/WordStats20230625015043 - Web Deploy/profile.arm.json
+Properties/serviceDependencies.WordStats20230625015043 - Web Deploy.json
+Properties/serviceDependencies.json
+Properties/ServiceDependencies/WordStats20230625015043 - Web Deploy/apis1.arm.json

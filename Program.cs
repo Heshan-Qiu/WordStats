@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "Word Stats App API", Description = "Word Stats App API", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "Word Stats Backend API", Description = "Word Stats Backend API", Version = "v1" });
 });
 
 builder.Services.AddSingleton<Stream, RandomWordStream>();
@@ -30,8 +30,11 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
+
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Word Stats App API v1"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Word Stats Backend API v1"));
 
 app.UseCors("AllowAll");
 
