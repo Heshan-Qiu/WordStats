@@ -10,9 +10,9 @@ namespace WordStats.Interfaces
 
         void AddCharacters(IDictionary<char, int> characters);
 
-        IEnumerable<String> GetLargestFiveWords();
+        IEnumerable<string> GetLargestFiveWords();
 
-        IEnumerable<String> GetSmallestFiveWords();
+        IEnumerable<string> GetSmallestFiveWords();
 
         IEnumerable<KeyValuePair<string, int>> GetMostFrequentTenWords();
 
