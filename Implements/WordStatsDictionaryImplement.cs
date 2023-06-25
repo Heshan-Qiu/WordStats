@@ -1,15 +1,17 @@
 using System.Text.Json;
 
-namespace WordStats
+using WordStats.Interfaces;
+
+namespace WordStats.Implements
 {
-    public sealed class WordStatsDictionaryImpl : IWordStats
+    public sealed class WordStatsDictionaryImplement : IWordStats
     {
         private static readonly object _lock = new object();
 
         private IDictionary<string, int> Words = new Dictionary<string, int>();
         private IDictionary<char, int> Characters = new Dictionary<char, int>();
 
-        public void AddWord(string word, int count)
+        private void AddWord(string word, int count)
         {
             lock (_lock)
             {
@@ -32,7 +34,7 @@ namespace WordStats
             }
         }
 
-        public void AddCharacter(char character, int count)
+        private void AddCharacter(char character, int count)
         {
             lock (_lock)
             {
@@ -101,6 +103,8 @@ namespace WordStats
             {
                 var result = new
                 {
+                    TotalWords = Words.Sum(x => x.Value),
+                    TotalCharacters = Characters.Sum(x => x.Value),
                     LargestFiveWords = GetLargestFiveWords(),
                     SmallestFiveWords = GetSmallestFiveWords(),
                     MostFrequentTenWords = GetMostFrequentTenWords(),

@@ -2,7 +2,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
 
-namespace WordStats
+using WordStats.Interfaces;
+
+namespace WordStats.Services
 {
     public class WordStatsService : BackgroundService
     {

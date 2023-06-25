@@ -1,7 +1,9 @@
 using System.Text;
 
 using RandomWords;
-using WordStats;
+using WordStats.Interfaces;
+using WordStats.Implements;
+using WordStats.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddSingleton<Stream, RandomWordStream>();
 builder.Services.AddSingleton<Encoding, UTF8Encoding>();
-builder.Services.AddSingleton<IWordStats, WordStatsDictionaryImpl>();
-builder.Services.AddSingleton<IWordStatsWriter, WordStatsWriterConsoleImpl>();
+builder.Services.AddSingleton<IWordStats, WordStatsDictionaryImplement>();
+builder.Services.AddSingleton<IWordStatsWriter, WordStatsWriterConsoleImplement>();
 builder.Services.Configure<WordStatsServiceOptions>(builder.Configuration.GetSection("WordStatsService"));
 builder.Services.AddHostedService<WordStatsService>();
 

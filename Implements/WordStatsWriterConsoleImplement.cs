@@ -1,6 +1,8 @@
-namespace WordStats
+using WordStats.Interfaces;
+
+namespace WordStats.Implements
 {
-    public class WordStatsWriterConsoleImpl : IWordStatsWriter
+    public class WordStatsWriterConsoleImplement : IWordStatsWriter
     {
         public void WriteStats(IWordStats? stats)
         {
@@ -10,6 +12,8 @@ namespace WordStats
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine($"| Total Words: {stats.GetWords().Sum(x => x.Value)}, Total Characters: {stats.GetCharacters().Sum(x => x.Value)}");
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"| Largest 5 words: {string.Join(", ", stats.GetLargestFiveWords())}");
             Console.WriteLine("|----------------------------------------------------------------------------------------------------------------------");

@@ -1,4 +1,4 @@
-namespace WordStats
+namespace WordStats.Services
 {
     public class WordStatsServiceOptions
     {

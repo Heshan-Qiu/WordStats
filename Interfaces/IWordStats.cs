@@ -1,12 +1,12 @@
-namespace WordStats
+namespace WordStats.Interfaces
 {
     public interface IWordStats
     {
-        void AddWord(string word, int count);
+        // void AddWord(string word, int count);
 
         void AddWords(IDictionary<string, int> words);
 
-        void AddCharacter(char character, int count);
+        // void AddCharacter(char character, int count);
 
         void AddCharacters(IDictionary<char, int> characters);
 

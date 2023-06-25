@@ -1,4 +1,4 @@
-namespace WordStats
+namespace WordStats.Interfaces
 {
     public interface IWordStatsWriter
     {
