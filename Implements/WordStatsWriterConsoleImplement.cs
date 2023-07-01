@@ -13,7 +13,7 @@ namespace WordStats.Implements
             Console.SetCursorPosition(0, 0);
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine($"| Total Words: {stats.GetWords().Sum(x => x.Value)}, Total Characters: {stats.GetCharacters().Sum(x => x.Value)}");
+            Console.WriteLine($"| Total Words: {stats.GetWordsOrderByFrequencyDescending().Sum(x => x.Value)}, Total Characters: {stats.GetCharactersOrderByFrequencyDescending().Sum(x => x.Value)}");
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"| Largest 5 words: {string.Join(", ", stats.GetLargestFiveWords())}");
             Console.WriteLine("|----------------------------------------------------------------------------------------------------------------------");
@@ -23,7 +23,7 @@ namespace WordStats.Implements
             Console.WriteLine("| " + string.Join(", ", stats.GetMostFrequentTenWords()));
             Console.WriteLine("|----------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("  Characters:");
-            Console.WriteLine(string.Join(", ", stats.GetCharacters()));
+            Console.WriteLine(string.Join(", ", stats.GetCharactersOrderByFrequencyDescending()));
         }
     }
 }

@@ -81,7 +81,7 @@ namespace WordStats.Implements
             }
         }
 
-        public IEnumerable<KeyValuePair<string, int>> GetWords()
+        public IEnumerable<KeyValuePair<string, int>> GetWordsOrderByFrequencyDescending()
         {
             lock (_lock)
             {
@@ -89,7 +89,7 @@ namespace WordStats.Implements
             }
         }
 
-        public IEnumerable<KeyValuePair<char, int>> GetCharacters()
+        public IEnumerable<KeyValuePair<char, int>> GetCharactersOrderByFrequencyDescending()
         {
             lock (_lock)
             {
@@ -108,7 +108,7 @@ namespace WordStats.Implements
                     LargestFiveWords = GetLargestFiveWords(),
                     SmallestFiveWords = GetSmallestFiveWords(),
                     MostFrequentTenWords = GetMostFrequentTenWords(),
-                    Characters = GetCharacters()
+                    Characters = GetCharactersOrderByFrequencyDescending()
                 };
                 return JsonSerializer.Serialize(result);
             }

@@ -16,9 +16,9 @@ namespace WordStats.Interfaces
 
         IEnumerable<KeyValuePair<string, int>> GetMostFrequentTenWords();
 
-        IEnumerable<KeyValuePair<string, int>> GetWords();
+        IEnumerable<KeyValuePair<string, int>> GetWordsOrderByFrequencyDescending();
 
-        IEnumerable<KeyValuePair<char, int>> GetCharacters();
+        IEnumerable<KeyValuePair<char, int>> GetCharactersOrderByFrequencyDescending();
 
         string ToJsonString();
     }
