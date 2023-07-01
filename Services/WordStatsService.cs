@@ -18,7 +18,7 @@ namespace WordStats.Services
 
         private readonly IWordStatsWriter _writer;
 
-        private readonly WordStatsServiceOptions _options;
+        private readonly IOptions<WordStatsServiceOptions> _options;
 
         public WordStatsService(Stream stream, Encoding encoding, IWordStats stats, IWordStatsWriter writer,
             IOptions<WordStatsServiceOptions> options, ILogger<WordStatsService> logger)
@@ -27,7 +27,7 @@ namespace WordStats.Services
             _encoding = encoding;
             _stats = stats;
             _writer = writer;
-            _options = options.Value;
+            _options = options;
             _logger = logger;
         }
 
@@ -48,13 +48,13 @@ namespace WordStats.Services
             GetWordStats(text);
             GetCharacterStats(text);
 
-            await Task.Delay(_options.ReadDelay);
+            await Task.Delay(_options.Value.ReadDelay);
         }
 
         private async Task DoWriteAsyncTask()
         {
             _writer.WriteStats(_stats);
-            await Task.Delay(_options.WriteDelay);
+            await Task.Delay(_options.Value.WriteDelay);
         }
 
         private byte[] ReadStream()
