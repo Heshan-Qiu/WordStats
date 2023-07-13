@@ -69,7 +69,7 @@ namespace WordStats.Implements
         {
             lock (_lock)
             {
-                return Words.OrderBy(w => w.Key.Length).Take(5).Select(w => w.Key);
+                return Words.OrderBy(w => w.Key).OrderBy(w => w.Key.Length).Take(5).Select(w => w.Key);
             }
         }
 
